@@ -1,17 +1,17 @@
 package me.rikinmarfatia.mintask.models;
 
 /**
- * A model for a task. Contains basic information like title and details.
+ * A model for a task.
  *
  *  @author Rikin Marfatia (rikinm10@gmail.com)
  */
 public class Task {
     private String mTitle;
-    private boolean complete;
+    private boolean mComplete;
 
     public Task(String title) {
         mTitle = title;
-        complete = false;
+        mComplete = false;
     }
 
     public String getTitle() {
@@ -23,10 +23,11 @@ public class Task {
     }
 
     public boolean isComplete() {
-        return complete;
+        return mComplete;
     }
 
-    public void complete() {
-        complete = !complete;
+    public void setComplete(boolean complete) {
+        mComplete = complete;
     }
+
 }
