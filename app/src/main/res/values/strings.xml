@@ -4,6 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_add_task">+</string>
+    <string name="edit_tasktitle_hint">What do you want to do?</string>
+    <string name="btn_enter_task">Enter</string>
+    <string name="text_newtask">Add Your Task</string>
+
 </resources>

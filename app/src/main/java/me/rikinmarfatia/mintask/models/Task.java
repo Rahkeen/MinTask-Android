@@ -30,4 +30,9 @@ public class Task {
         mComplete = complete;
     }
 
+    @Override
+    public String toString() {
+        return mTitle;
+    }
+
 }
