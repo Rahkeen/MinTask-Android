@@ -7,6 +7,12 @@
     <string name="btn_add_task">+</string>
     <string name="edit_tasktitle_hint">What do you want to do?</string>
     <string name="btn_enter_task">Enter</string>
-    <string name="text_newtask">Add Your Task</string>
+    
+    <string-array name="colors_array">
+        <item>white</item>
+        <item>red</item>
+        <item>green</item>
+        <item>blue</item>
+    </string-array>
 
 </resources>

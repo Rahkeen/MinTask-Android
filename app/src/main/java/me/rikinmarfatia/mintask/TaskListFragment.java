@@ -91,6 +91,11 @@ public class TaskListFragment extends ListFragment {
             CheckBox taskCompleted = (CheckBox)convertView.findViewById(R.id.tasklist_item_checkbox);
             taskCompleted.setChecked(task.isComplete());
 
+            convertView.setBackgroundColor(getResources().getColor(task.getColor()));
+            if(task.getColor() != R.color.white) {
+                taskTitle.setTextColor(getResources().getColor(R.color.white));
+            }
+
             return convertView;
         }
     }

@@ -1,5 +1,7 @@
 package me.rikinmarfatia.mintask.models;
 
+import me.rikinmarfatia.mintask.R;
+
 /**
  * A model for a task.
  *
@@ -7,11 +9,13 @@ package me.rikinmarfatia.mintask.models;
  */
 public class Task {
     private String mTitle;
+    private int mColor;
     private boolean mComplete;
 
     public Task(String title) {
         mTitle = title;
         mComplete = false;
+        mColor = R.color.white;
     }
 
     public String getTitle() {
@@ -28,6 +32,14 @@ public class Task {
 
     public void setComplete(boolean complete) {
         mComplete = complete;
+    }
+
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(int color) {
+        mColor = color;
     }
 
     @Override
