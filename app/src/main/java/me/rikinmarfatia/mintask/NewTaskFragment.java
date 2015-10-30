@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,9 @@ import me.rikinmarfatia.mintask.models.Task;
 import me.rikinmarfatia.mintask.util.ColorStrings;
 
 /**
- * Created by rikin on 10/23/15.
+ * Fragment for creating a new Task
+ *
+ * @author Rikin Marfatia (rikinm10@gmail.com)
  */
 public class NewTaskFragment extends Fragment {
 
@@ -89,7 +92,7 @@ public class NewTaskFragment extends Fragment {
         mColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(currTask != null) {
+                if (currTask != null) {
                     if (parent.getItemAtPosition(position).toString().equals(ColorStrings.WHITE)) {
                         currTask.setColor(R.color.white);
                     } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.RED)) {
@@ -99,6 +102,7 @@ public class NewTaskFragment extends Fragment {
                     } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.BLUE)) {
                         currTask.setColor(R.color.blue);
                     }
+
                 }
             }
 
