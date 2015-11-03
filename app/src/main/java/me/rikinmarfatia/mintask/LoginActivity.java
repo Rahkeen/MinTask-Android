@@ -15,6 +15,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
+import retrofit.Retrofit;
+
 public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
+    private Retrofit retrofit;
 
     private boolean mIsResolving = false;
     private boolean mShouldResolve = false;
@@ -40,6 +43,10 @@ public class LoginActivity extends AppCompatActivity implements
                 .addApi(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .addScope(new Scope(Scopes.EMAIL))
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://localhost:3000")
                 .build();
 
         mSignInButton = (SignInButton)findViewById(R.id.btn_google_login);
