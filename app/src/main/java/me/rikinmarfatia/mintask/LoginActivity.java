@@ -15,6 +15,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
+import me.rikinmarfatia.mintask.models.User;
+import me.rikinmarfatia.mintask.services.MinTaskService;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
 import retrofit.Retrofit;
 
 public class LoginActivity extends AppCompatActivity implements
@@ -28,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
     private Retrofit retrofit;
+    private MinTaskService minTaskService;
 
     private boolean mIsResolving = false;
     private boolean mShouldResolve = false;
@@ -46,8 +53,11 @@ public class LoginActivity extends AppCompatActivity implements
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:3000")
+                .baseUrl("http://192.168.1.5:8080")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        minTaskService = retrofit.create(MinTaskService.class);
 
         mSignInButton = (SignInButton)findViewById(R.id.btn_google_login);
         mSignInButton.setSize(SignInButton.SIZE_WIDE);
@@ -75,6 +85,20 @@ public class LoginActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         Toast.makeText(this, "Connected via Google Login", Toast.LENGTH_SHORT).show();
         mShouldResolve = false;
+
+        Call<User> call =  minTaskService.getUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Response<User> response, Retrofit retrofit) {
+                User test = response.body();
+                Log.d(TAG, test.toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d(TAG, "OnFailure: " + t.toString());
+            }
+        });
 
         Intent toMainIntent = new Intent(this, TaskListActivity.class);
         startActivity(toMainIntent);
