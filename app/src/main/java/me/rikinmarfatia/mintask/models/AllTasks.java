@@ -1,8 +1,16 @@
 package me.rikinmarfatia.mintask.models;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import me.rikinmarfatia.mintask.util.MinTaskOpenHelper;
+import me.rikinmarfatia.mintask.util.MinTaskDBSchema.TaskTable;
+import me.rikinmarfatia.mintask.util.TaskCursorWrapper;
 
 /**
  * Singleton to act as storage for Task objects.
@@ -11,19 +19,14 @@ import java.util.ArrayList;
  */
 public class AllTasks {
 
-    private ArrayList<Task> mTasks;
     private Context mAppContext;
+    private SQLiteDatabase mDatabase;
     private static AllTasks sAllTasks;
 
     private AllTasks(Context c) {
-        mTasks = new ArrayList<>();
         mAppContext = c;
+        mDatabase = new MinTaskOpenHelper(mAppContext).getWritableDatabase();
 
-        // TODO: Remove this later, this is just for dummy data.
-        for(int i = 1; i <= 5; i++) {
-            Task task = new Task("Task " + i);
-            mTasks.add(task);
-        }
     }
 
     public static AllTasks getInstance(Context c) {
@@ -34,7 +37,44 @@ public class AllTasks {
         return sAllTasks;
     }
 
-    public ArrayList<Task> getTasks() {
-        return mTasks;
+    public Cursor getTasks() {
+        TaskCursorWrapper cursor = queryTasks(null, null);
+        return cursor.getWrappedCursor();
+    }
+
+    private static ContentValues getContentValues(Task task) {
+        ContentValues values = new ContentValues();
+        values.put(TaskTable.Columns.ID, task.getId().toString());
+        values.put(TaskTable.Columns.TITLE, task.getTitle());
+        values.put(TaskTable.Columns.COMPLETE, task.isComplete() ? 1 : 0);
+        values.put(TaskTable.Columns.COLOR, task.getColor());
+
+        return values;
+    }
+
+    public void addTask(Task t) {
+        ContentValues values = getContentValues(t);
+        mDatabase.insert(TaskTable.NAME, null, values);
+    }
+
+    public void updateTask(Task t) {
+        String idString = t.getId().toString();
+        ContentValues values = getContentValues(t);
+
+        mDatabase.update(TaskTable.NAME, values,
+                TaskTable.Columns.ID + " = ?", new String[]{idString});
+    }
+
+    private TaskCursorWrapper queryTasks(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                TaskTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null);
+
+        return new TaskCursorWrapper(cursor);
     }
 }

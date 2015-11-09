@@ -2,6 +2,7 @@ package me.rikinmarfatia.mintask;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.rikinmarfatia.mintask.models.AllTasks;
 import me.rikinmarfatia.mintask.models.Task;
@@ -31,13 +33,13 @@ public class NewTaskFragment extends Fragment {
     private Button mEnterTask;
     private EditText mInputTask;
     private Spinner mColorSpinner;
-    private ArrayList<Task> tasks;
+    private AllTasks sAllTasks;
     private Task currTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tasks = AllTasks.getInstance(getActivity()).getTasks();
+        sAllTasks = AllTasks.getInstance(getActivity());
     }
 
     @Override
@@ -76,7 +78,8 @@ public class NewTaskFragment extends Fragment {
                     getActivity().setResult(Activity.RESULT_CANCELED);
                 } else {
                     getActivity().setResult(Activity.RESULT_OK);
-                    tasks.add(currTask);
+                    sAllTasks.addTask(currTask);
+
                 }
                 getActivity().finish();
             }
@@ -108,7 +111,7 @@ public class NewTaskFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // nothing
+                // nothing...yet!
             }
         });
 

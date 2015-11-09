@@ -1,7 +1,7 @@
 package me.rikinmarfatia.mintask.util;
 
 /**
- * Created by rikin on 10/25/15.
+ * Class that holds String constants
  */
 public final class ColorStrings {
     public static final String WHITE = "white";
