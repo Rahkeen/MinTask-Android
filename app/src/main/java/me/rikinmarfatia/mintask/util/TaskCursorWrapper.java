@@ -9,7 +9,9 @@ import me.rikinmarfatia.mintask.models.Task;
 import me.rikinmarfatia.mintask.util.MinTaskDBSchema.TaskTable;
 
 /**
- * Created by rikin on 11/7/15.
+ * Simple wrapper that allows task population after reading from the db
+ *
+ * @author Rikin Marfatia (rikinm10@gmail.com)
  */
 public class TaskCursorWrapper extends CursorWrapper {
 

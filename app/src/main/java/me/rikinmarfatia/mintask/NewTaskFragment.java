@@ -2,7 +2,6 @@ package me.rikinmarfatia.mintask;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,12 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import me.rikinmarfatia.mintask.models.AllTasks;
+import me.rikinmarfatia.mintask.models.TaskDataHelper;
 import me.rikinmarfatia.mintask.models.Task;
 import me.rikinmarfatia.mintask.util.ColorStrings;
 
@@ -33,13 +28,13 @@ public class NewTaskFragment extends Fragment {
     private Button mEnterTask;
     private EditText mInputTask;
     private Spinner mColorSpinner;
-    private AllTasks sAllTasks;
+    private TaskDataHelper sTaskDataHelper;
     private Task currTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sAllTasks = AllTasks.getInstance(getActivity());
+        sTaskDataHelper = TaskDataHelper.getInstance(getActivity());
     }
 
     @Override
@@ -78,7 +73,7 @@ public class NewTaskFragment extends Fragment {
                     getActivity().setResult(Activity.RESULT_CANCELED);
                 } else {
                     getActivity().setResult(Activity.RESULT_OK);
-                    sAllTasks.addTask(currTask);
+                    sTaskDataHelper.addTask(currTask);
 
                 }
                 getActivity().finish();

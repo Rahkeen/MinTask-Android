@@ -17,29 +17,41 @@ import me.rikinmarfatia.mintask.util.TaskCursorWrapper;
  *
  * @author Rikin Marfataia (rikinm10@gmail.com)
  */
-public class AllTasks {
+public class TaskDataHelper {
 
     private Context mAppContext;
     private SQLiteDatabase mDatabase;
-    private static AllTasks sAllTasks;
+    private static TaskDataHelper sTaskDataHelper;
 
-    private AllTasks(Context c) {
+    private TaskDataHelper(Context c) {
         mAppContext = c;
         mDatabase = new MinTaskOpenHelper(mAppContext).getWritableDatabase();
 
     }
 
-    public static AllTasks getInstance(Context c) {
-        if(sAllTasks == null) {
-            sAllTasks = new AllTasks(c);
+    public static TaskDataHelper getInstance(Context c) {
+        if(sTaskDataHelper == null) {
+            sTaskDataHelper = new TaskDataHelper(c);
         }
 
-        return sAllTasks;
+        return sTaskDataHelper;
     }
 
-    public Cursor getTasks() {
+    public List<Task> getTasks() {
         TaskCursorWrapper cursor = queryTasks(null, null);
-        return cursor.getWrappedCursor();
+        List<Task> tasks = new ArrayList<>();
+
+        try {
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                tasks.add(cursor.getTask());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return tasks;
     }
 
     private static ContentValues getContentValues(Task task) {
