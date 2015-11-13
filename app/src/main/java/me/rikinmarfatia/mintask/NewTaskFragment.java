@@ -3,6 +3,7 @@ package me.rikinmarfatia.mintask;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,11 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import me.rikinmarfatia.mintask.models.AllTasks;
+import me.rikinmarfatia.mintask.models.TaskDataHelper;
 import me.rikinmarfatia.mintask.models.Task;
 import me.rikinmarfatia.mintask.util.ColorStrings;
 
@@ -31,13 +29,13 @@ public class NewTaskFragment extends Fragment {
     private Button mEnterTask;
     private EditText mInputTask;
     private Spinner mColorSpinner;
-    private ArrayList<Task> tasks;
+    private TaskDataHelper sTaskDataHelper;
     private Task currTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tasks = AllTasks.getInstance(getActivity()).getTasks();
+        sTaskDataHelper = TaskDataHelper.getInstance(getActivity());
     }
 
     @Override
@@ -76,7 +74,7 @@ public class NewTaskFragment extends Fragment {
                     getActivity().setResult(Activity.RESULT_CANCELED);
                 } else {
                     getActivity().setResult(Activity.RESULT_OK);
-                    tasks.add(currTask);
+                    sTaskDataHelper.addTask(currTask);
                 }
                 getActivity().finish();
             }
@@ -93,22 +91,13 @@ public class NewTaskFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (currTask != null) {
-                    if (parent.getItemAtPosition(position).toString().equals(ColorStrings.WHITE)) {
-                        currTask.setColor(R.color.white);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.RED)) {
-                        currTask.setColor(R.color.red);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.GREEN)) {
-                        currTask.setColor(R.color.green);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.BLUE)) {
-                        currTask.setColor(R.color.blue);
-                    }
-
+                    currTask.setColor(parent.getItemAtPosition(position).toString());
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // nothing
+                // nothing...yet!
             }
         });
 
