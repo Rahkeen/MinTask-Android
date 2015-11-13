@@ -27,6 +27,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
         android:text="@string/btn_enter_task"
         />
 

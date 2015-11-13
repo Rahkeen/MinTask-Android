@@ -9,10 +9,10 @@
     <string name="btn_enter_task">Enter</string>
     
     <string-array name="colors_array">
-        <item>white</item>
-        <item>red</item>
-        <item>green</item>
-        <item>blue</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
     </string-array>
     <string name="title_activity_login">LoginActivity</string>
 

@@ -12,13 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingTop="?attr/actionBarSize"
         />
-
 
     <Button
         android:id="@+id/btn_add_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
         android:text="@string/btn_add_task"
         />
 

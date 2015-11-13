@@ -36,6 +36,7 @@ public class NewTaskFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sTaskDataHelper = TaskDataHelper.getInstance(getActivity());
+        getActivity().setTitle("Add a new task");
     }
 
     @Override
@@ -53,11 +54,13 @@ public class NewTaskFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(currTask == null) {
                     currTask = new Task(s.toString());
+                } else if(s.length() == 0) {
+                    currTask.setTitle(s.toString());
+                    mColorSpinner.setEnabled(false);
                 } else {
                     currTask.setTitle(s.toString());
+                    mColorSpinner.setEnabled(true);
                 }
-
-                mColorSpinner.setEnabled(true);
             }
 
             @Override
@@ -70,7 +73,7 @@ public class NewTaskFragment extends Fragment {
         mEnterTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currTask == null) {
+                if(currTask == null || currTask.getTitle().length() == 0) {
                     getActivity().setResult(Activity.RESULT_CANCELED);
                 } else {
                     getActivity().setResult(Activity.RESULT_OK);

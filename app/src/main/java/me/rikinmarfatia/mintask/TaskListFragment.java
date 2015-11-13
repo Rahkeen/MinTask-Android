@@ -2,7 +2,10 @@ package me.rikinmarfatia.mintask;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +39,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Tasks");
     }
 
     @Override
@@ -44,6 +48,8 @@ public class TaskListFragment extends Fragment {
 
         mTaskRecyclerView = (RecyclerView)v.findViewById(R.id.task_recycler_view);
         mTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()
+                .getApplicationContext()));
 
         mBtnAddTask = (Button)v.findViewById(R.id.btn_add_task);
         mBtnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +107,33 @@ public class TaskListFragment extends Fragment {
         }
     }
 
+    private class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
+        private Drawable mDivider;
+
+        public SimpleDividerItemDecoration(Context context) {
+            mDivider = context.getResources().getDrawable(R.drawable.line_divider);
+        }
+
+        @Override
+        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            int left = parent.getPaddingLeft();
+            int right = parent.getWidth() - parent.getPaddingRight();
+
+            int childCount = parent.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = parent.getChildAt(i);
+
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                int top = child.getBottom() + params.bottomMargin;
+                int bottom = top + mDivider.getIntrinsicHeight();
+
+                mDivider.setBounds(left, top, right, bottom);
+                mDivider.draw(c);
+            }
+        }
+    }
+
     private class TaskHolder extends RecyclerView.ViewHolder {
 
         private TextView mTaskTitle;
@@ -126,10 +159,10 @@ public class TaskListFragment extends Fragment {
             mTaskTitle.setText(mTask.getTitle());
             mTaskCheckBox.setChecked(mTask.isComplete());
 
-            itemView.setBackgroundColor(getColorFromString(mTask.getColor()));
-            if(!ColorStrings.WHITE.equalsIgnoreCase(mTask.getColor())) {
-                mTaskTitle.setTextColor(getColorFromString(ColorStrings.WHITE));
-            }
+//            itemView.setBackgroundColor(getColorFromString(mTask.getColor()));
+//            if(!ColorStrings.WHITE.equalsIgnoreCase(mTask.getColor())) {
+//                mTaskTitle.setTextColor(getColorFromString(ColorStrings.WHITE));
+//            }
         }
     }
 
