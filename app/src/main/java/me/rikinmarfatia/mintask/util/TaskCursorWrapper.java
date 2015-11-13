@@ -23,7 +23,7 @@ public class TaskCursorWrapper extends CursorWrapper {
         String idString = getString(getColumnIndex(TaskTable.Columns.ID));
         String title = getString(getColumnIndex(TaskTable.Columns.TITLE));
         int complete = getInt(getColumnIndex(TaskTable.Columns.COMPLETE));
-        int color = getInt(getColumnIndex(TaskTable.Columns.COLOR));
+        String color = getString(getColumnIndex(TaskTable.Columns.COLOR));
 
         Task task = new Task (title, UUID.fromString(idString));
         task.setComplete(complete != 0);

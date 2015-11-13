@@ -7,9 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import me.rikinmarfatia.mintask.util.MinTaskOpenHelper;
 import me.rikinmarfatia.mintask.util.MinTaskDBSchema.TaskTable;
+import me.rikinmarfatia.mintask.util.MinTaskOpenHelper;
 import me.rikinmarfatia.mintask.util.TaskCursorWrapper;
 
 /**
@@ -67,6 +68,25 @@ public class TaskDataHelper {
     public void addTask(Task t) {
         ContentValues values = getContentValues(t);
         mDatabase.insert(TaskTable.NAME, null, values);
+    }
+
+    public Task getTask(UUID id) {
+        TaskCursorWrapper cursor = queryTasks(
+                TaskTable.Columns.ID + " = ? ",
+                new String[] {id.toString()}
+        );
+
+        try {
+            if(cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getTask();
+
+        } finally {
+            cursor.close();
+        }
     }
 
     public void updateTask(Task t) {

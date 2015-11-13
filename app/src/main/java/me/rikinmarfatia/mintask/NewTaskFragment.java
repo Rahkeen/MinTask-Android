@@ -3,6 +3,7 @@ package me.rikinmarfatia.mintask;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -74,7 +75,6 @@ public class NewTaskFragment extends Fragment {
                 } else {
                     getActivity().setResult(Activity.RESULT_OK);
                     sTaskDataHelper.addTask(currTask);
-
                 }
                 getActivity().finish();
             }
@@ -91,16 +91,7 @@ public class NewTaskFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (currTask != null) {
-                    if (parent.getItemAtPosition(position).toString().equals(ColorStrings.WHITE)) {
-                        currTask.setColor(R.color.white);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.RED)) {
-                        currTask.setColor(R.color.red);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.GREEN)) {
-                        currTask.setColor(R.color.green);
-                    } else if (parent.getItemAtPosition(position).toString().equals(ColorStrings.BLUE)) {
-                        currTask.setColor(R.color.blue);
-                    }
-
+                    currTask.setColor(parent.getItemAtPosition(position).toString());
                 }
             }
 

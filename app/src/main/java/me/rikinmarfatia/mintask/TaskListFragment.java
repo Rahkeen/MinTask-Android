@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import me.rikinmarfatia.mintask.models.TaskDataHelper;
 import me.rikinmarfatia.mintask.models.Task;
+import me.rikinmarfatia.mintask.util.ColorStrings;
 
 /**
  * @author Rikin Marfatia (rikinm10@gmail.com)
@@ -85,6 +88,19 @@ public class TaskListFragment extends Fragment {
         }
     }
 
+    private int getColorFromString(String colorName) {
+
+        if(colorName.equalsIgnoreCase(ColorStrings.WHITE)) {
+            return ContextCompat.getColor(getActivity(), R.color.white);
+        } else if (colorName.equalsIgnoreCase(ColorStrings.RED)) {
+            return ContextCompat.getColor(getActivity(), R.color.red);
+        } else if(colorName.equalsIgnoreCase(ColorStrings.GREEN)) {
+            return ContextCompat.getColor(getActivity(), R.color.green);
+        } else {
+            return ContextCompat.getColor(getActivity(), R.color.blue);
+        }
+    }
+
     private class TaskHolder extends RecyclerView.ViewHolder {
 
         private TextView mTaskTitle;
@@ -96,6 +112,13 @@ public class TaskListFragment extends Fragment {
 
             mTaskTitle = (TextView)itemView.findViewById(R.id.tasklist_item_title);
             mTaskCheckBox = (CheckBox)itemView.findViewById(R.id.tasklist_item_checkbox);
+            mTaskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mTask.setComplete(isChecked);
+                    TaskDataHelper.getInstance(getActivity()).updateTask(mTask);
+                }
+            });
         }
 
         public void bindTask(Task task) {
@@ -103,12 +126,11 @@ public class TaskListFragment extends Fragment {
             mTaskTitle.setText(mTask.getTitle());
             mTaskCheckBox.setChecked(mTask.isComplete());
 
-            itemView.setBackgroundColor(getResources().getColor(mTask.getColor()));
-            if(mTask.getColor() != R.color.white) {
-                mTaskTitle.setTextColor(getResources().getColor(R.color.white));
+            itemView.setBackgroundColor(getColorFromString(mTask.getColor()));
+            if(!ColorStrings.WHITE.equalsIgnoreCase(mTask.getColor())) {
+                mTaskTitle.setTextColor(getColorFromString(ColorStrings.WHITE));
             }
         }
-
     }
 
     private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {

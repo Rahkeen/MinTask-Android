@@ -3,6 +3,7 @@ package me.rikinmarfatia.mintask.models;
 import java.util.UUID;
 
 import me.rikinmarfatia.mintask.R;
+import me.rikinmarfatia.mintask.util.ColorStrings;
 
 /**
  * A model for a task.
@@ -12,7 +13,7 @@ import me.rikinmarfatia.mintask.R;
 public class Task {
     private UUID mId;
     private String mTitle;
-    private int mColor;
+    private String mColor;
     private boolean mComplete;
 
     public Task(String title) {
@@ -23,7 +24,7 @@ public class Task {
         mId = id;
         mTitle = title;
         mComplete = false;
-        mColor = R.color.white;
+        mColor = ColorStrings.WHITE;
     }
 
     public UUID getId() {
@@ -46,11 +47,11 @@ public class Task {
         mComplete = complete;
     }
 
-    public int getColor() {
+    public String getColor() {
         return mColor;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         mColor = color;
     }
 
