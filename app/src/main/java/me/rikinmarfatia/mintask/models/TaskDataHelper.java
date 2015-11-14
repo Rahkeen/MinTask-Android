@@ -25,7 +25,7 @@ public class TaskDataHelper {
     private static TaskDataHelper sTaskDataHelper;
 
     private TaskDataHelper(Context c) {
-        mAppContext = c;
+        mAppContext = c.getApplicationContext();
         mDatabase = new MinTaskOpenHelper(mAppContext).getWritableDatabase();
 
     }
@@ -73,7 +73,7 @@ public class TaskDataHelper {
     public Task getTask(UUID id) {
         TaskCursorWrapper cursor = queryTasks(
                 TaskTable.Columns.ID + " = ? ",
-                new String[] {id.toString()}
+                new String[]{id.toString()}
         );
 
         try {
@@ -87,6 +87,11 @@ public class TaskDataHelper {
         } finally {
             cursor.close();
         }
+    }
+
+    public void deleteCompletedTasks() {
+        mDatabase.delete(TaskTable.NAME, TaskTable.Columns.COMPLETE
+        + " = " + 1, null);
     }
 
     public void updateTask(Task t) {

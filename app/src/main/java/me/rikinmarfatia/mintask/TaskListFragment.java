@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,11 +39,14 @@ public class TaskListFragment extends Fragment {
     private Button mBtnAddTask;
     private RecyclerView mTaskRecyclerView;
     private TaskAdapter mTaskAdapter;
+    private TaskDataHelper mTaskDataHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Tasks");
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -66,9 +73,29 @@ public class TaskListFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.delete_tasks:
+                Log.d(TAG, "delete_tasks clicked");
+                mTaskDataHelper.deleteCompletedTasks();
+                updateUI();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void updateUI() {
-        TaskDataHelper taskDataHelper = TaskDataHelper.getInstance(getActivity());
-        List<Task> tasks = taskDataHelper.getTasks();
+        mTaskDataHelper = TaskDataHelper.getInstance(getActivity());
+        List<Task> tasks = mTaskDataHelper.getTasks();
 
         if(mTaskAdapter == null){
             mTaskAdapter = new TaskAdapter(tasks);
