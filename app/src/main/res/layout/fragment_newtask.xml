@@ -8,17 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:hint="@string/edit_tasktitle_hint"
         />
 
-    <Spinner
-        android:id="@+id/spinner_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/edit_tasktitle"
-        >
-    </Spinner>
+    <!--<Spinner-->
+        <!--android:id="@+id/spinner_color"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_below="@id/edit_tasktitle"-->
+        <!-->-->
+    <!--</Spinner>-->
 
     <Button
         android:id="@+id/btn_enter_task"
