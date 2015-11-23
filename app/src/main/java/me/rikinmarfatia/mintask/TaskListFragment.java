@@ -129,19 +129,6 @@ public class TaskListFragment extends Fragment {
         }
     }
 
-//    private int getColorFromString(String colorName) {
-//
-//        if(colorName.equalsIgnoreCase(ColorStrings.WHITE)) {
-//            return ContextCompat.getColor(getActivity(), R.color.white);
-//        } else if (colorName.equalsIgnoreCase(ColorStrings.RED)) {
-//            return ContextCompat.getColor(getActivity(), R.color.red);
-//        } else if(colorName.equalsIgnoreCase(ColorStrings.GREEN)) {
-//            return ContextCompat.getColor(getActivity(), R.color.green);
-//        } else {
-//            return ContextCompat.getColor(getActivity(), R.color.blue);
-//        }
-//    }
-
     private class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
         private Drawable mDivider;
 
@@ -194,10 +181,6 @@ public class TaskListFragment extends Fragment {
             mTaskTitle.setText(mTask.getTitle());
             mTaskCheckBox.setChecked(mTask.isComplete());
 
-//            itemView.setBackgroundColor(getColorFromString(mTask.getColor()));
-//            if(!ColorStrings.WHITE.equalsIgnoreCase(mTask.getColor())) {
-//                mTaskTitle.setTextColor(getColorFromString(ColorStrings.WHITE));
-//            }
         }
     }
 

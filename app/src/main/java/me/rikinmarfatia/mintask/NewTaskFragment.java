@@ -28,7 +28,6 @@ public class NewTaskFragment extends Fragment {
 
     private Button mEnterTask;
     private EditText mInputTask;
-    private Spinner mColorSpinner;
     private TaskDataHelper sTaskDataHelper;
     private Task currTask;
 
@@ -78,27 +77,6 @@ public class NewTaskFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
-//        mColorSpinner = (Spinner) v.findViewById(R.id.spinner_color);
-//        mColorSpinner.setEnabled(false);
-//        ArrayAdapter<CharSequence> colorAdapter =
-//                ArrayAdapter.createFromResource(getActivity(), R.array.colors_array,
-//                        android.R.layout.simple_spinner_item);
-//        colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        mColorSpinner.setAdapter(colorAdapter);
-//        mColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (currTask != null) {
-//                    currTask.setColor(parent.getItemAtPosition(position).toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // nothing...yet!
-//            }
-//        });
 
         return v;
     }

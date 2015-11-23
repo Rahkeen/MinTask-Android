@@ -110,11 +110,10 @@ public class LoginActivity extends AppCompatActivity implements
                     mGoogleApiClient.connect();
                 }
             } else {
-                // Could not resolve the connection result, show the user an
-                // error dialog.
+                // TODO: Show error dialog
             }
         } else {
-            // Show the signed-out UI
+            // TODO: Show signed-out UI
         }
     }
 
