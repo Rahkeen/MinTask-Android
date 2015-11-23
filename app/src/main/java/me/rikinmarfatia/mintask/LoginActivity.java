@@ -2,12 +2,11 @@ package me.rikinmarfatia.mintask;
 
 import android.content.Intent;
 import android.content.IntentSender;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
@@ -52,6 +51,18 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
@@ -61,16 +72,14 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         if(mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
+         Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+         Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
             mGoogleApiClient.disconnect();
         }
     }
 
-
     @Override
     public void onConnected(Bundle bundle) {
-        Toast.makeText(this, "Connected via Google Login", Toast.LENGTH_SHORT).show();
         mShouldResolve = false;
 
         Intent toMainIntent = new Intent(this, TaskListActivity.class);
@@ -129,7 +138,6 @@ public class LoginActivity extends AppCompatActivity implements
     private void signInClicked() {
         mShouldResolve = true;
         mGoogleApiClient.connect();
-        Toast.makeText(this, "Signing in w/ Google", Toast.LENGTH_SHORT).show();
     }
 
     @Override

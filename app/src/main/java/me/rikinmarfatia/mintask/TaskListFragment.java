@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class TaskListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
     public static final int REQUEST_NEWTASK = 1;
 
-    private Button mBtnAddTask;
+    private ImageButton mBtnAddTask;
     private RecyclerView mTaskRecyclerView;
     private TaskAdapter mTaskAdapter;
     private TaskDataHelper mTaskDataHelper;
@@ -58,7 +59,7 @@ public class TaskListFragment extends Fragment {
         mTaskRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()
                 .getApplicationContext()));
 
-        mBtnAddTask = (Button)v.findViewById(R.id.btn_add_task);
+        mBtnAddTask = (ImageButton)v.findViewById(R.id.btn_add_task);
         mBtnAddTask.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -72,6 +73,7 @@ public class TaskListFragment extends Fragment {
 
         return v;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -91,6 +93,12 @@ public class TaskListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     private void updateUI() {
@@ -121,18 +129,18 @@ public class TaskListFragment extends Fragment {
         }
     }
 
-    private int getColorFromString(String colorName) {
-
-        if(colorName.equalsIgnoreCase(ColorStrings.WHITE)) {
-            return ContextCompat.getColor(getActivity(), R.color.white);
-        } else if (colorName.equalsIgnoreCase(ColorStrings.RED)) {
-            return ContextCompat.getColor(getActivity(), R.color.red);
-        } else if(colorName.equalsIgnoreCase(ColorStrings.GREEN)) {
-            return ContextCompat.getColor(getActivity(), R.color.green);
-        } else {
-            return ContextCompat.getColor(getActivity(), R.color.blue);
-        }
-    }
+//    private int getColorFromString(String colorName) {
+//
+//        if(colorName.equalsIgnoreCase(ColorStrings.WHITE)) {
+//            return ContextCompat.getColor(getActivity(), R.color.white);
+//        } else if (colorName.equalsIgnoreCase(ColorStrings.RED)) {
+//            return ContextCompat.getColor(getActivity(), R.color.red);
+//        } else if(colorName.equalsIgnoreCase(ColorStrings.GREEN)) {
+//            return ContextCompat.getColor(getActivity(), R.color.green);
+//        } else {
+//            return ContextCompat.getColor(getActivity(), R.color.blue);
+//        }
+//    }
 
     private class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
         private Drawable mDivider;
